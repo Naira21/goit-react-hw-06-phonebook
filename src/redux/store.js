@@ -1,4 +1,3 @@
-//import { createStore } from 'redux';
 import { configureStore } from '@reduxjs/toolkit'
 import { items, filter } from './contacts/reducers'
 import { combineReducers } from 'redux'
@@ -23,8 +22,8 @@ const persistConfig = {
 
 
 export const contactReducer = combineReducers({
-    items,
-    filter
+  items,
+  filter
 })
 
 const persistedContactReducer = persistReducer(persistConfig, contactReducer)
@@ -39,4 +38,4 @@ export const store = configureStore({
     }),
 })
 
-export const persistor = persistStore(store)
+export const persistor = persistStore(store);

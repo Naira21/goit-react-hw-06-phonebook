@@ -2,10 +2,10 @@ import { useState, useRef } from "react";
 import s from "./Form.module.css";
 import { v4 as uuidv4 } from "uuid";
 
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import {addContact} from '../../redux/contacts/action';
 
- function Form({ onSubmit, onAdd}) {
+function Form({ onSubmit}) {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const contactIdName = useRef(() => {
@@ -15,6 +15,8 @@ import {addContact} from '../../redux/contacts/action';
     uuidv4();
   });
 
+  const dispatch = useDispatch();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const obj = {
@@ -23,9 +25,7 @@ import {addContact} from '../../redux/contacts/action';
       id: uuidv4(),
     };
 
-  
-    // onSubmit(obj);
-    onAdd(obj)
+    dispatch(addContact(obj));
     resetForm();
     
   };
@@ -87,14 +87,20 @@ import {addContact} from '../../redux/contacts/action';
   );
 }
 
+export default Form;
+
+
+// Логика ванильного Redux (без Toolkit)
+
+// export default Form;
 // const mapStateToProps = (state) => {
 //   return {
 //     baseContacts: state.contacts,
 //   }
 // }
 
-const mapDispatchToProps = (dispatch) => ({  
-  onAdd: (newContact) => dispatch(addContact(newContact)),  //onAdd = props
-})
+// const mapDispatchToProps = (dispatch) => ({  
+//   onSubmit: (newContact) => dispatch(addContact(newContact)), 
+// })
 
-export default connect(null, mapDispatchToProps)(Form)
+//export default connect(null, mapDispatchToProps)(Form)
